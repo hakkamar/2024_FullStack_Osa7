@@ -16,6 +16,8 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "@stylistic/js/indent": ["error", 2],
     eqeqeq: "error",
     "no-trailing-spaces": "error",
