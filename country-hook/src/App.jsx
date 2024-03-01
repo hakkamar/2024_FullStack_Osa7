@@ -24,9 +24,7 @@ let hakuUrli = "";
 const useCountry = (name) => {
   const [country, setCountry] = useState(null);
 
-  if (!name) {
-    hakuUrli = baseUrl;
-  } else {
+  if (name) {
     hakuUrli = baseUrl + name;
   }
 
@@ -40,9 +38,11 @@ const useCountry = (name) => {
   };
 
   useEffect(() => {
-    getMaa().then((initialMaat) => {
-      setCountry(initialMaat);
-    });
+    if (name) {
+      getMaa().then((initialMaat) => {
+        setCountry(initialMaat);
+      });
+    }
   }, [name]);
 
   return country;
