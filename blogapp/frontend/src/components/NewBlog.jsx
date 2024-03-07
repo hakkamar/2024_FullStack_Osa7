@@ -30,26 +30,37 @@ const NewBlog = ({ doCreate }) => {
       <h2>Create a New Blog</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Title:</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={handleTitleChange}
-          />
+          <label>
+            Title:
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={handleTitleChange}
+            />
+          </label>
         </div>
         <div>
-          <label>URL:</label>
-          <input type="text" id="url" value={url} onChange={handleUrlChange} />
+          <label>
+            URL:
+            <input
+              type="text"
+              id="url"
+              value={url}
+              onChange={handleUrlChange}
+            />
+          </label>
         </div>
         <div>
-          <label>Author:</label>
-          <input
-            type="text"
-            id="author"
-            value={author}
-            onChange={handleAuthorChange}
-          />
+          <label>
+            Author:
+            <input
+              type="text"
+              id="author"
+              value={author}
+              onChange={handleAuthorChange}
+            />
+          </label>
         </div>
         <button id="create-button" type="submit">
           Create
