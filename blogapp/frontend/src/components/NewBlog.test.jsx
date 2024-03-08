@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import NewBlog from "./NewBlog";
+import { vi } from "vitest";
 
 describe("NewBlog", () => {
   test("calls event handler with correct data", async () => {
