@@ -1,22 +1,17 @@
-import { useEffect, createRef } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import storage from "./services/storage";
 
 import Login from "./components/Login";
-import Blog from "./components/Blog";
-import NewBlog from "./components/NewBlog";
 import Notification from "./components/Notification";
-import Togglable from "./components/Togglable";
+
+import BlogForm from "./components/BlogForm";
+import BlogList from "./components/BlogList";
 import Footer from "./components/Footer";
 
-import { haeJaAsetaUser, poistaUser, setUser } from "./reducers/userReducer";
-import {
-  initializeBlogs,
-  createBlog,
-  updateBlog,
-  removeBlog,
-} from "./reducers/blogReducer";
+import { poistaUser, setUser } from "./reducers/userReducer";
+import { initializeBlogs } from "./reducers/blogReducer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,64 +27,36 @@ const App = () => {
     }
   }, [dispatch]);
 
-  const blogFormRef = createRef();
-  const blogs = useSelector((state) => state.blogs);
   const user = useSelector(({ user }) => {
     return user;
   });
-
-  const handleLogin = (credentials) => {
-    dispatch(haeJaAsetaUser(credentials));
-  };
-
-  const handleCreate = async (blog) => {
-    dispatch(createBlog(blog));
-    blogFormRef.current.toggleVisibility();
-  };
-
-  const handleVote = async (blog) => {
-    dispatch(updateBlog(blog));
-  };
 
   const handleLogout = () => {
     dispatch(poistaUser(user));
   };
 
-  const handleDelete = async (blog) => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      dispatch(removeBlog(blog));
-    }
-  };
-
-  if (!user) {
-    return (
-      <div>
-        <h2>blogs</h2>
-        <Notification />
-        <Login doLogin={handleLogin} />
-      </div>
-    );
-  }
-
   return (
     <div>
       <h2>blogs</h2>
       <Notification />
-      <div>
-        {user.name} logged in
-        <button onClick={handleLogout}>logout</button>
-      </div>
-      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-        <NewBlog doCreate={handleCreate} />
-      </Togglable>
-      {blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          handleVote={handleVote}
-          handleDelete={handleDelete}
-        />
-      ))}
+      {!user ? (
+        <Login />
+      ) : (
+        <div>
+          {user.name} logged in
+          <button onClick={handleLogout}>logout</button>
+        </div>
+      )}
+      {user ? (
+        <div>
+          <BlogForm />
+          <BlogList />
+        </div>
+      ) : (
+        <div>
+          <p>log in...</p>
+        </div>
+      )}
       <Footer />
     </div>
   );
