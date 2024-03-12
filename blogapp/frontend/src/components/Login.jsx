@@ -17,28 +17,40 @@ const Login = () => {
     setPassword("");
   };
 
+  const Home = () => (
+    <p>
+      Tervetuloa sivuille. Liiku valikossa olevilla valinnoilla. Vain
+      kirjautunut käyttäjä voi lisätä blogeja. Kuka vaan voi kommentoida
+      blogeja. (soon to be released...)
+    </p>
+  );
+
   return (
-    <form onSubmit={handleLogin}>
-      <label>
-        Username:
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </label>
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          id="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <input id="login-button" type="submit" value="Login" />
-    </form>
+    <div>
+      <Home />
+
+      <form onSubmit={handleLogin}>
+        <label>
+          Username:
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            id="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <input id="login-button" type="submit" value="Login" />
+      </form>
+    </div>
   );
 };
 

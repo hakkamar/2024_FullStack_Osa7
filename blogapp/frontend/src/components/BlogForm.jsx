@@ -6,12 +6,17 @@ import NewBlog from "./NewBlog";
 
 import { createBlog } from "../reducers/blogReducer";
 
+import { useNavigate } from "react-router-dom";
+
 const BlogForm = () => {
   const blogFormRef = createRef();
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const handleCreate = async (blog) => {
     dispatch(createBlog(blog));
+    navigate("/");
     blogFormRef.current.toggleVisibility();
   };
 

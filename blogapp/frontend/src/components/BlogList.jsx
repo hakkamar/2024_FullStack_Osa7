@@ -1,31 +1,32 @@
-import { useSelector, useDispatch } from "react-redux";
-import Blog from "./Blog";
-import { updateBlog, removeBlog } from "../reducers/blogReducer";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const BlogList = () => {
-  const dispatch = useDispatch();
-
   const blogs = useSelector((state) => state.blogs);
 
-  const handleVote = async (blog) => {
-    dispatch(updateBlog(blog));
+  const style = {
+    backgroundColor: "white",
+    margin: "10px",
+    padding: "10px",
+    border: "2px solid",
+    borderColor: "black",
+    //borderRadius: "5px",
   };
 
-  const handleDelete = async (blog) => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      dispatch(removeBlog(blog));
-    }
-  };
+  if (blogs.length === 0) {
+    return <div>Ladataan blogeja...</div>;
+  }
 
   return (
     <div>
       {blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          handleVote={handleVote}
-          handleDelete={handleDelete}
-        />
+        <div key={blog.id}>
+          <Link to={`/blogs/${blog.id}`}>
+            <p style={style}>
+              {blog.title} by {blog.author}
+            </p>
+          </Link>
+        </div>
       ))}
     </div>
   );
