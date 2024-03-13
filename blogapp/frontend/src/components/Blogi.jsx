@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateBlog, removeBlog } from "../reducers/blogReducer";
+import { updateBlog, removeBlog, addComment } from "../reducers/blogReducer";
 import { useNavigate, useMatch } from "react-router-dom";
+import commentService from "../services/comments";
 
 import storage from "../services/storage";
 
 const Blogi = () => {
+  const [comment, setComment] = useState("");
+
   const blogs = useSelector((state) => state.blogs);
 
   const dispatch = useDispatch();
@@ -13,13 +17,32 @@ const Blogi = () => {
   const match = useMatch("/blogs/:id");
   const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
 
-  //console.log("Blogi - blog", blog);
-
   const style = {
     border: "solid",
     padding: 10,
     borderWidth: 1,
     marginBottom: 5,
+  };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const commentToAdd = {
+      body: comment,
+    };
+    commentService.create(blog.id, commentToAdd).then((uusiComment) => {
+      const comments = blog.comments.concat(uusiComment);
+      const changedBlog = {
+        ...blog,
+        comments: comments,
+      };
+      dispatch(addComment(changedBlog, comment));
+    });
+    setComment("");
   };
 
   const handleVote = async (blog) => {
@@ -58,6 +81,32 @@ const Blogi = () => {
 
       <div>added by {nameOfUser}</div>
       {canRemove && <button onClick={() => handleDelete(blog)}>remove</button>}
+
+      <div>
+        <h4>Comments</h4>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>
+              Comment:
+              <input
+                type="text"
+                id="comment"
+                value={comment}
+                onChange={handleCommentChange}
+              />
+            </label>
+          </div>
+          <button id="create-comment-button" type="submit">
+            Create Comment
+          </button>
+        </form>
+        <ul>
+          {blog.comments.map((comment) => (
+            <li key={comment.id}>{comment.body}</li>
+          ))}
+        </ul>
+        <br />
+      </div>
     </div>
   );
 };

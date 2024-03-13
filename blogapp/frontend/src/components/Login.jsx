@@ -21,7 +21,7 @@ const Login = () => {
     <p>
       Tervetuloa sivuille. Liiku valikossa olevilla valinnoilla. Vain
       kirjautunut käyttäjä voi lisätä blogeja. Kuka vaan voi kommentoida
-      blogeja. (soon to be released...)
+      blogeja.
     </p>
   );
 

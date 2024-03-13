@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import blogService from "../services/blogs";
+import commentService from "../services/comments";
 
 import { setNotification } from "../reducers/notificationReducer";
 
@@ -24,6 +25,19 @@ const blogSlice = createSlice({
         };
         const blogs = state.map((blog) =>
           blog.id !== id ? blog : changedBlog
+        );
+        return blogs.sort((a, b) => b.likes - a.likes);
+      }
+      return state;
+    },
+    addCommentOf(state, action) {
+      //console.log(JSON.parse(JSON.stringify(state)));
+
+      if (action.payload) {
+        const id = action.payload.id;
+        const updatedBlog = action.payload;
+        const blogs = state.map((blog) =>
+          blog.id !== id ? blog : updatedBlog
         );
         return blogs.sort((a, b) => b.likes - a.likes);
       }
@@ -94,11 +108,34 @@ export const updateBlog = (blog) => {
   };
 };
 
+export const addComment = (updatedBlog, comment) => {
+  return async (dispatch) => {
+    try {
+      message = `You add Comment '${comment}' to ${updatedBlog.title}`;
+      type = "success";
+      dispatch(setNotification({ message, type }, 5));
+
+      dispatch(addCommentOf(updatedBlog));
+    } catch (error) {
+      message = error.message;
+      type = "error";
+      dispatch(setNotification({ message, type }, 5));
+    }
+  };
+};
+
 export const removeBlog = (blog) => {
   const id = blog.id;
 
   return async (dispatch) => {
     try {
+      if (blog.comments.length > 0) {
+        for (let index = 0; index < blog.comments.length; index++) {
+          const poisId = blog.comments[index].id;
+          await commentService.remove(poisId);
+        }
+      }
+
       await blogService.remove(id);
 
       message = `Blog ${blog.title}, by ${blog.author} removed`;
@@ -115,7 +152,7 @@ export const removeBlog = (blog) => {
   };
 };
 
-export const { addVoteOf, appendBlog, deleteBlog, setBlogs } =
+export const { addVoteOf, addCommentOf, appendBlog, deleteBlog, setBlogs } =
   blogSlice.actions;
 
 export default blogSlice.reducer;

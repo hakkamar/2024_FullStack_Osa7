@@ -110,7 +110,6 @@ const App = () => {
           path="/newBlog"
           element={user ? <BlogForm /> : <Navigate replace to="/login" />}
         />
-
         <Route path="/users" element={<UserList />} />
         <Route path="/users/:id" element={<UsersBlogs juuseri={juuseri} />} />
         <Route path="/blogs/:id" element={<Blogi />} />
