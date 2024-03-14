@@ -1,20 +1,20 @@
-const UsersBlogs = ({ juuseri }) => {
-  //console.log("UsersBlogs - juuseri", juuseri);
+import { Title3, Lista } from "../tyylit";
 
+const UsersBlogs = ({ juuseri }) => {
   if (!juuseri) {
     return null;
   }
 
   return (
-    <div className="blog">
-      <h2>{juuseri.name}</h2>
-      <h4>Added Blogs</h4>
+    <Lista className="blog">
+      <Title3>{juuseri.name}</Title3>
+      <Title3>Added Blogs</Title3>
       <ul>
         {juuseri.blogs.map((blog) => (
           <li key={blog.id}>{blog.title}</li>
         ))}
       </ul>
-    </div>
+    </Lista>
   );
 };
 

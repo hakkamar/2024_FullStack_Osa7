@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
+import { Title3, StyledLink, Lista } from "../tyylit";
 
 const UserList = () => {
   const users = useSelector((state) => state.users);
@@ -9,14 +10,15 @@ const UserList = () => {
   }
 
   return (
-    <div>
-      <h2>Users</h2>
+    <Lista>
+      <Title3>Users</Title3>
       {users.map((user) => (
-        <div key={user.id}>
-          <Link to={`/users/${user.id}`}>{user.name}</Link> {user.blogs.length}
-        </div>
+        <Lista key={user.id}>
+          <StyledLink to={`/users/${user.id}`}>{user.name}</StyledLink>{" "}
+          {user.blogs.length} blogia
+        </Lista>
       ))}
-    </div>
+    </Lista>
   );
 };
 

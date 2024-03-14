@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { haeJaAsetaUser } from "../reducers/userReducer";
 
+import { Form, Button, Input, Lista } from "../tyylit";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,13 +28,13 @@ const Login = () => {
   );
 
   return (
-    <div>
+    <Lista>
       <Home />
 
-      <form onSubmit={handleLogin}>
+      <Form onSubmit={handleLogin}>
         <label>
           Username:
-          <input
+          <Input
             type="text"
             id="username"
             value={username}
@@ -41,16 +43,18 @@ const Login = () => {
         </label>
         <label>
           Password:
-          <input
+          <Input
             type="password"
             value={password}
             id="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <input id="login-button" type="submit" value="Login" />
-      </form>
-    </div>
+        <Button id="login-button" type="submit">
+          Login
+        </Button>
+      </Form>
+    </Lista>
   );
 };
 

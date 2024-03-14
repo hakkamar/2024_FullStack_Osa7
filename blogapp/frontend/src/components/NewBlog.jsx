@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
+import { Title3, Form, Button, Input, Lista } from "../tyylit";
+
 const NewBlog = ({ doCreate }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
@@ -27,13 +29,13 @@ const NewBlog = ({ doCreate }) => {
   };
 
   return (
-    <div>
-      <h2>Create a New Blog</h2>
-      <form onSubmit={handleSubmit}>
+    <Lista>
+      <Title3>Create a New Blog</Title3>
+      <Form onSubmit={handleSubmit}>
         <div>
           <label>
             Title:
-            <input
+            <Input
               type="text"
               id="title"
               value={title}
@@ -44,7 +46,7 @@ const NewBlog = ({ doCreate }) => {
         <div>
           <label>
             URL:
-            <input
+            <Input
               type="text"
               id="url"
               value={url}
@@ -55,7 +57,7 @@ const NewBlog = ({ doCreate }) => {
         <div>
           <label>
             Author:
-            <input
+            <Input
               type="text"
               id="author"
               value={author}
@@ -63,11 +65,11 @@ const NewBlog = ({ doCreate }) => {
             />
           </label>
         </div>
-        <button id="create-button" type="submit">
+        <Button id="create-button" type="submit">
           Create
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Form>
+    </Lista>
   );
 };
 

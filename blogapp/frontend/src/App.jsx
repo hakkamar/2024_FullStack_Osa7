@@ -6,7 +6,6 @@ import storage from "./services/storage";
 import {
   Routes,
   Route,
-  Link,
   Navigate,
   useNavigate,
   useMatch,
@@ -25,6 +24,8 @@ import Footer from "./components/Footer";
 import { poistaUser, setUser } from "./reducers/userReducer";
 import { initializeBlogs } from "./reducers/blogReducer";
 import { initializeUsers } from "./reducers/usersReducer";
+
+import { Title2, Button, Page, Navigation, StyledLink } from "./tyylit";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,10 +56,6 @@ const App = () => {
     navigate("/");
   };
 
-  const padding = {
-    paddingRight: 5,
-  };
-
   const users = useSelector((state) => state.users);
   const match = useMatch("/users/:id");
   const juuseri = match
@@ -67,39 +64,27 @@ const App = () => {
 
   const Menu = () => {
     return (
-      <div>
-        <Link style={padding} to="/">
-          blogs
-        </Link>
-        <Link style={padding} to="/newBlog">
-          newBlog
-        </Link>
-        <Link style={padding} to="/users">
-          users
-        </Link>
+      <Navigation>
+        <StyledLink to="/">Blogs</StyledLink>
+        <StyledLink to="/newBlog">New Blog</StyledLink>
+        <StyledLink to="/users">Users</StyledLink>
         {user ? (
-          <em style={padding}>
+          <em>
             {user.name} logged in
-            <button onClick={handleLogout}>logout</button>
+            <Button onClick={handleLogout}>logout</Button>
           </em>
         ) : (
-          <Link style={padding} to="/login">
-            login
-          </Link>
+          <StyledLink to="/login">Login</StyledLink>
         )}
-        <p></p>
-        <hr></hr>
-      </div>
+      </Navigation>
     );
   };
 
   return (
-    <div>
-      <h2>Herra Hakkaraisen blogisivut</h2>
+    <Page>
       <Menu />
-
       <Notification />
-
+      <Title2>Herra Hakkaraisen blogisivut</Title2>
       <Routes>
         <Route path="/" element={<BlogList />} />
         <Route
@@ -116,7 +101,7 @@ const App = () => {
       </Routes>
 
       <Footer />
-    </div>
+    </Page>
   );
 };
 
